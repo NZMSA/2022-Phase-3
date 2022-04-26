@@ -1,0 +1,25 @@
+{
+  "short_name": "MSA - 2048",
+  "name": "Microsoft Student Accelerator - Phase 2 2048 Game",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/NZMSA/MSA-Website/master/public/ms-icon-70x70.png?token=GHSAT0AAAAAABNGNSFLHVSQ7HDIYKNAX3AWYTHW24Q",
+      "sizes": "70x70",
+      "type": "image/png"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/NZMSA/MSA-Website/master/public/ms-icon-144x144.png?token=GHSAT0AAAAAABNGNSFL6UYD624RV5XHHBX2YTHW3PQ",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/NZMSA/MSA-Website/master/public/ms-icon-310x310.png?token=GHSAT0AAAAAABNGNSFKYKGMTJTRB4POVBKIYTHW3MQ",
+      "type": "image/png",
+      "sizes": "310x310"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
