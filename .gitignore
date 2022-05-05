@@ -506,20 +506,6 @@ sketch
 # Ignore code-workspaces
 *.code-workspace
 
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.wasm
-*.wat
-*.xhtml
 
 ### VisualStudio ###
 ## Ignore Visual Studio temporary files, build results, and
