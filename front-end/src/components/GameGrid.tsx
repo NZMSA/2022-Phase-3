@@ -7,8 +7,6 @@ export interface GridProps {
 }
 
 const GameGrid = ({width, height} : GridProps) => {
-    const theme = useTheme();
-
     const generateRows = () : JSX.Element[] => {
         const res = [];
 
@@ -41,7 +39,7 @@ const GameGridRow = ({width, height} : GameGridRowProps) => {
         for(let i = 0; i < width; i++) 
         //TODO: New up tile in here - Rodger, 6th May 2022
             res.push(<Grid item key={`GameGridTile${height} ${i}`} md={tileWidth} justifyContent={"space-evenly"} alignItems={"stretch"}>
-                <Box sx={{backgroundColor: "#000", aspectRatio: '1'}}/>
+                <Box sx={{backgroundColor: "#000", aspectRatio: '1', borderRadius: 4}}/>
             </Grid>);
 
         return res;
