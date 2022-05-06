@@ -39,6 +39,7 @@ const GameGridRow = ({width, height} : GameGridRowProps) => {
         const res = [];
 
         for(let i = 0; i < width; i++) 
+        //TODO: New up tile in here - Rodger, 6th May 2022
             res.push(<Grid item key={`GameGridTile${height} ${i}`} md={tileWidth} justifyContent={"space-evenly"} alignItems={"stretch"}>
                 <Box sx={{backgroundColor: "#000", aspectRatio: '1'}}/>
             </Grid>);
