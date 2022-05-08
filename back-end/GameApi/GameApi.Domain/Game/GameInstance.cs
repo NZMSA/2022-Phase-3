@@ -15,6 +15,10 @@ public class GameInstance
 
     public int Score { get; set; }
 
+    public int RowSize { get; set; }
+
+    public int ColumnSize { get; set; }
+
     public IList<GameStep> GameSteps { get; set; } = default!;
 
     public User User { get; set; } = default!;
