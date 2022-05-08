@@ -1,4 +1,6 @@
-﻿using GameApi.AppServices.Moves.Queries;
+﻿using GameApi.AppServices.Moves.Commands;
+using GameApi.AppServices.Moves.Queries;
+using GameApi.Domain.Game;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +20,13 @@ public class GameHistoryController : ControllerBase
     public async Task<IActionResult> Get()
     {
         var res = await _mediator.Send(new GetMoveQuery());
+        return Ok(res.ToString());
+    }
+
+    [HttpGet(Name = "AddMoves")]
+    public async Task<IActionResult> AddMove(GameStep gameStep)
+    {
+        var res = await _mediator.Send(new CreateMoveCommand(gameStep));
         return Ok(res.ToString());
     }
 }
