@@ -1,5 +1,6 @@
-import { Grid, Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import { TileInfo } from "../store/slices/gameSlice";
+import Tile from "./Tile";
 
 
 export interface GameGridRowProps {
@@ -17,7 +18,7 @@ const GameGridRow = ({width, height, tiles} : GameGridRowProps) => {
 
         for(let i = 0; i < width; i++) 
             res.push(<Grid item key={`GameGridTile${height} ${i}`} md={tileWidth} justifyContent={"space-evenly"} alignItems={"stretch"}>
-                <Box sx={{backgroundColor: "#000", aspectRatio: '1', borderRadius: 4}}/>
+                <Tile currentValue={tiles[i].value}/>
             </Grid>);
 
         return res;
