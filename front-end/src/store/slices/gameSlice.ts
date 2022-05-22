@@ -53,12 +53,29 @@ export const gameSlice = createSlice({
         moveLeft: (state) => {
             console.log("Left Key Trigger");
             let newState = state.gameState.map(row => {
-                let newRow = [];
+                let squashedRow = [];
                 for(let i = 0; i < row.length; i++) {
                     if(row[i].value !== 0) {
-                        newRow.push(row[i]);
+                        squashedRow.push(row[i]);
                     }
                 }
+
+                let newRow = [];
+
+                for(let i = 0; i < squashedRow.length; i++) {
+                    if(i + 1 === squashedRow.length) {
+                        newRow.push({ value: squashedRow[i].value });
+                        break;
+                    }
+
+                    if(squashedRow[i].value === squashedRow[i + 1].value) {
+                        newRow.push({value : squashedRow[i].value + 1});
+                        i++;
+                        continue;
+                    }
+
+                    newRow.push({ value: squashedRow[i].value });
+                };
 
                 let diff = row.length - newRow.length;
                 for(let i = 0; i < diff; i++) {
