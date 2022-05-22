@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { combineLeftRowVals, combineRightRowVals, copyGameState, rotateLeft, rotateRight, squashRow } from '../../services/gameLogicService';
+import { combineLeftRowVals, combineRightRowVals, copyGameState, generateTile, hasTileMoved, rotateLeft, rotateRight, squashRow } from '../../services/gameLogicService';
 import { RootState } from '../rootStore';
 
 export interface TileInfo {
@@ -16,7 +16,7 @@ export interface GameState {
 
 const initialState : GameState = {
     gameState: [
-        [{ value: 1 }, { value: 1 }, { value: 1 }, { value: 1 }],
+        [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
@@ -52,7 +52,6 @@ export const gameSlice = createSlice({
             state.width = action.payload.width;
         },
         moveLeft: (state) => {
-            console.log("Left Key Trigger");
             let newState = state.gameState.map(row => {
                 let squashedRow = squashRow(row);
                 let newRow = combineLeftRowVals(squashedRow);
@@ -65,12 +64,12 @@ export const gameSlice = createSlice({
                 return newRow;
             });
 
+            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+
             state.gameState = newState;
 
         },
         moveRight: (state) => {
-            console.log("Right Key Trigger");
-
             let newState = state.gameState.map(row => {
                 let squashedRow = squashRow(row);
                 let newRow = combineRightRowVals(squashedRow);
@@ -83,11 +82,11 @@ export const gameSlice = createSlice({
                 return newRow;
             });
 
+            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+
             state.gameState = newState;
         },
         moveUp: (state) => {
-            console.log("Up Key Trigger");
-
             let rotatedState = rotateLeft(state.gameState);
 
             let newState = rotatedState.map(row => {
@@ -102,11 +101,12 @@ export const gameSlice = createSlice({
                 return newRow;
             });
 
-            state.gameState = rotateRight(newState);
+            newState = rotateRight(newState);
+            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+
+            state.gameState = newState;
         },
         moveDown: (state) => {
-            console.log("Down Key Trigger");
-
             let rotatedState = rotateRight(state.gameState);
 
             let newState = rotatedState.map(row => {
@@ -121,7 +121,10 @@ export const gameSlice = createSlice({
                 return newRow;
             });
 
-            state.gameState = rotateLeft(newState);
+            newState = rotateLeft(newState);
+            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+
+            state.gameState = newState;
             
         },
         gameOver: (state) => {
@@ -130,9 +133,18 @@ export const gameSlice = createSlice({
         startGame: (state) => {
             let cleanState = copyGameState(initialState.gameState);
 
-            for(let i = 0; i < 2; i++) {
-                cleanState[Math.floor(Math.random() * 4)][Math.floor(Math.random() * 4)] = { value: Math.ceil(Math.random() * 2)}
+            let x1 = Math.floor(Math.random() * 4);
+            let x2 = Math.floor(Math.random() * 4);
+            let y1 = Math.floor(Math.random() * 4);
+            let y2 = Math.floor(Math.random() * 4);
+
+            if(x1 === x2 && y1 === y2) {
+                y2 = Math.floor(Math.random() * y1);
+                x2 = Math.floor(Math.random() * x1);
             }
+
+            cleanState[x1][y1] = { value: Math.ceil(Math.random() * 2)};
+            cleanState[x2][y2] = { value: Math.ceil(Math.random() * 2)};
 
             state.gameState = cleanState;
         }

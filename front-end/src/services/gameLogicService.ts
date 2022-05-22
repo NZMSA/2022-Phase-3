@@ -89,3 +89,34 @@ export const rotateLeft = (gameState: TileInfo[][]) : TileInfo[][] => {
 
     return newState;
 }
+
+export const generateTile = (gameState: TileInfo[][]) : TileInfo[][] => {
+    let newState = copyGameState(gameState);
+
+    var emptyTiles : {x: number, y: number}[] = [];
+
+    gameState.forEach((row, rowInd) => {
+        row.forEach((tile, tileInd) => {
+            if(tile.value === 0) {
+                emptyTiles.push({x: rowInd, y: tileInd});
+            }
+        });
+    });
+
+    let randEmpty = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+    newState[randEmpty.x][randEmpty.y] = { value: Math.ceil(Math.random() * 2) }
+
+    return newState;
+}
+
+export const hasTileMoved = (originalState : TileInfo[][], newState: TileInfo[][]) => {
+    for(let i = 0; i < originalState.length; i++) {
+        for(let j = 0; j < originalState[i].length; j++) {
+            if(originalState[i][j].value !== newState[i][j].value) {
+               return true;
+            }
+        }
+    }
+
+    return false;
+}
