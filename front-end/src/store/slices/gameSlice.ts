@@ -32,7 +32,23 @@ export const gameSlice = createSlice({
     initialState,
     reducers: {
         newGame: (state, action : PayloadAction<{height: number, width: number}>) => {
+            let newGameState = [];
 
+            for(let i = 0; i < action.payload.height; i++) {
+                let row = [];
+
+                for(let j = 0; j < action.payload.width; j++) {
+                    row.push({ value: 0 });
+                }
+
+                newGameState.push(row);
+            }
+
+            state.gameState = newGameState;
+            state.isOver = false;
+            state.score = 0;
+            state.height = action.payload.height;
+            state.width = action.payload.width;
         },
         moveLeft: (state) => {
             console.log("Left Key Trigger");   
@@ -57,7 +73,6 @@ export const gameSlice = createSlice({
             }
 
             state.gameState = cleanState;
-
         }
     }
 });
