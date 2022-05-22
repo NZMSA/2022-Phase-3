@@ -17,7 +17,7 @@ class Game():
 
 
     def board(self) -> list:
-        return self.matrix
+        return self.matrix.copy()
 
 
     def new_game(self):
