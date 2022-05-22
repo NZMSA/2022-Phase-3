@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { combineLeftRowVals, combineRightRowVals, copyGameState, squashRow } from '../../services/gameLogicService';
+import { combineLeftRowVals, combineRightRowVals, copyGameState, rotateLeft, rotateRight, squashRow } from '../../services/gameLogicService';
 import { RootState } from '../rootStore';
 
 export interface TileInfo {
@@ -16,7 +16,7 @@ export interface GameState {
 
 const initialState : GameState = {
     gameState: [
-        [{ value: 1 }, { value: 1 }, { value: 1 }, { value: 1 }],
+        [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
@@ -90,6 +90,23 @@ export const gameSlice = createSlice({
         },
         moveDown: (state) => {
             console.log("Down Key Trigger");
+
+            let rotatedState = rotateRight(state.gameState);
+
+            let newState = rotatedState.map(row => {
+                let squashedRow = squashRow(row);
+                let newRow = combineLeftRowVals(squashedRow);
+
+                let diff = row.length - newRow.length;
+                for(let i = 0; i < diff; i++) {
+                    newRow.push({ value: 0 });
+                }
+
+                return newRow;
+            });
+
+            state.gameState = rotateLeft(newState);
+            
         },
         gameOver: (state) => {
             state.isOver = true;

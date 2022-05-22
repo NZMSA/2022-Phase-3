@@ -58,3 +58,33 @@ export const combineRightRowVals = (squashedRow : TileInfo[]) : TileInfo[] => {
 
     return newRow;
 }
+
+export const rotateRight = (gameState: TileInfo[][]) : TileInfo[][] => {
+    var newState : TileInfo[][] = [];
+    for(let i = 0; i < gameState[0].length; i++) {
+        newState.push([]);
+    }
+
+    gameState.forEach(row => {
+        row.forEach((tile, index) => {
+            newState[index].unshift(tile);
+        });
+    });
+
+    return newState;
+}
+
+export const rotateLeft = (gameState: TileInfo[][]) : TileInfo[][] => {
+    var newState : TileInfo[][] = [];
+    for(let i = 0; i < gameState[0].length; i++) {
+        newState.push([]);
+    }
+
+    gameState.forEach(row => {
+        row.forEach((tile, index) => {
+            newState[row.length - index - 1].push(tile);
+        });
+    });
+
+    return newState;
+}
