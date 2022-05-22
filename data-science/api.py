@@ -23,7 +23,7 @@ def replyHealth():
 )
 def decideMove(grid: list[int]):
     if len(grid) != 16:
-        raise HTTPException(status_code=400, detail="Invalid array size!")
+        raise HTTPException(status_code=400, detail=f"Invalid array size! Expected 16 numbers, got {len(grid)} numbers instead.")
 
     for item in grid:
         if type(item) != int:
