@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { moveDown, moveLeft, moveRight, moveUp, gameOver, newGame, selectState } from "../store/slices/gameSlice";
+import { moveDown, moveLeft, moveRight, moveUp, gameOver, newGame, selectState, startGame } from "../store/slices/gameSlice";
 import GameGrid from "./GameGrid";
 
 
@@ -16,21 +16,21 @@ const LogicGameGrid = ({width, height} : LogicGameGridProps) : JSX.Element => {
     const dispatch = useAppDispatch();
     
     useKeyPress('ArrowDown', () => {
-        console.log("Down Key Trigger");
         dispatch(moveDown());
     });
     useKeyPress('ArrowUp', () => {
-        console.log("Up Key Trigger");
         dispatch(moveUp())
     });
     useKeyPress('ArrowLeft', () => {
-        console.log("Left Key Trigger");
         dispatch(moveLeft());
     });
     useKeyPress('ArrowRight', () => {
-        console.log("Right Key Trigger");
         dispatch(moveRight());
     });
+
+    useEffect(() => {
+        dispatch(startGame())
+    }, [dispatch]);
 
     return <Fragment> 
             <GameGrid width={width} height={height} gameState={gameState}/>
@@ -38,33 +38,18 @@ const LogicGameGrid = ({width, height} : LogicGameGridProps) : JSX.Element => {
 }
 
 const useKeyPress = (targetKey: string, callback: () => void) => {
-    const [isKeyPressed, setKeyPressed] = useState(false);
-    const [interval, setInterval] = useState(-1);
 
-    //we only want this to be triggered once, so ignore the deps here
+    const handlePress = (event : KeyboardEvent) => {
+        if(event.key === targetKey) {
+            callback();
+        }
+    };
+
     useEffect(() => {
-        //set a listener for the key being depressed (not literally).
-        window.addEventListener('keydown', (event) => {
-            if(event.key === targetKey)
-                //we want to trigger the callback here immediately, to register the initial press action
-                callback();
-                setKeyPressed(true);
-        });
-
+        //remove any existing listeners (in case this component gets re-rendered multiple times)
+        window.removeEventListener('keyup', handlePress);
         //set a listener for the key being released
-        window.addEventListener('keyup', (event) => {
-            if(event.key === targetKey)
-                setKeyPressed(false);
-
-                //we want to clear the interval here, to register the release action
-                window.clearInterval(interval);
-        });
-
-        //set an interval so that while the key is held down, presses are being registered
-        setInterval(window.setInterval(() => {
-            if(isKeyPressed)
-                callback();
-        }, 200));
+        window.addEventListener('keyup', handlePress);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 }

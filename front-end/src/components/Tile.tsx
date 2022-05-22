@@ -3,7 +3,7 @@ export interface TileProps {
 }
 
 const colours = [
-    "#faf8ef",
+    "#eee4da59",
     "#eee4da",
     "#eee1c9",
     "#f2b179",
@@ -15,7 +15,7 @@ const colours = [
 const Tile = ({currentValue} : TileProps) : JSX.Element => {
     //TODO: Fit the tile text font to the correct font family - Rodger, 21th May 2022
         return <div style={{display: 'grid', placeContent: 'center', aspectRatio: '1', borderRadius: 4, backgroundColor: colours[currentValue]}}>
-            {currentValue > 0 ? <p style={{fontSize: '54px'}}>{Math.pow(2, currentValue)}</p> : null}
+            {currentValue > 0 ? <p style={{fontSize: '55px', fontWeight: '700', color: '#776e65', margin: 0}}>{Math.pow(2, currentValue)}</p> : null}
         </div>
 }
 

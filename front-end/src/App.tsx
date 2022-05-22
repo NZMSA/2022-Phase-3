@@ -4,7 +4,7 @@ import './App.css';
 import LogicGameGrid from './components/LogicGameGrid';
 
 function App() {
-  return <Container maxWidth="md">
+  return <Container maxWidth="sm">
       <h1>2048 Clone</h1>
       <LogicGameGrid width={4} height={4}/>
     </Container>;

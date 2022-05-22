@@ -35,24 +35,34 @@ export const gameSlice = createSlice({
 
         },
         moveLeft: (state) => {
-            
+            console.log("Left Key Trigger");   
         },
         moveRight: (state) => {
-
+            console.log("Right Key Trigger");
         },
         moveUp: (state) => {
-
+            console.log("Up Key Trigger");
         },
         moveDown: (state) => {
-
+            console.log("Down Key Trigger");
         },
         gameOver: (state) => {
             state.isOver = true;
+        },
+        startGame: (state) => {
+            let cleanState = initialState.gameState.map((i) => i.slice());
+
+            for(let i = 0; i < 2; i++) {
+                cleanState[Math.floor(Math.random() * 4)][Math.floor(Math.random() * 4)] = { value: Math.ceil(Math.random() * 2)}
+            }
+
+            state.gameState = cleanState;
+
         }
     }
 });
 
-export const { newGame, moveLeft, moveRight, moveUp, moveDown, gameOver } = gameSlice.actions;
+export const { newGame, moveLeft, moveRight, moveUp, moveDown, gameOver, startGame } = gameSlice.actions;
 
 export const selectState = (state: RootState) => state.game.gameState;
 export const selectIsOver = (state: RootState) => state.game.isOver;
