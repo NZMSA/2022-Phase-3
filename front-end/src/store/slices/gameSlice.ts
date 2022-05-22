@@ -16,7 +16,7 @@ export interface GameState {
 
 const initialState : GameState = {
     gameState: [
-        [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
+        [{ value: 1 }, { value: 1 }, { value: 1 }, { value: 1 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
@@ -87,6 +87,22 @@ export const gameSlice = createSlice({
         },
         moveUp: (state) => {
             console.log("Up Key Trigger");
+
+            let rotatedState = rotateLeft(state.gameState);
+
+            let newState = rotatedState.map(row => {
+                let squashedRow = squashRow(row);
+                let newRow = combineRightRowVals(squashedRow);
+
+                let diff = row.length - newRow.length;
+                for(let i = 0; i < diff; i++) {
+                    newRow.push({ value: 0 });
+                }
+
+                return newRow;
+            });
+
+            state.gameState = rotateRight(newState);
         },
         moveDown: (state) => {
             console.log("Down Key Trigger");

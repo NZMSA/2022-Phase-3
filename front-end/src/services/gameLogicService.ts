@@ -26,6 +26,7 @@ export const combineLeftRowVals = (squashedRow : TileInfo[]) : TileInfo[] => {
             break;
         }
 
+        //TODO: Update score value
         if(squashedRow[i].value === squashedRow[i + 1].value) {
             newRow.push({value : squashedRow[i].value + 1});
             i++;
