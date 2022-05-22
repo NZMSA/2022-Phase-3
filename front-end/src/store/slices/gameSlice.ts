@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { combineLeftRowVals, combineRightRowVals, copyGameState, squashRow } from '../../services/gameLogicService';
 import { RootState } from '../rootStore';
 
 export interface TileInfo {
@@ -15,7 +16,7 @@ export interface GameState {
 
 const initialState : GameState = {
     gameState: [
-        [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
+        [{ value: 1 }, { value: 1 }, { value: 1 }, { value: 1 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
@@ -53,29 +54,8 @@ export const gameSlice = createSlice({
         moveLeft: (state) => {
             console.log("Left Key Trigger");
             let newState = state.gameState.map(row => {
-                let squashedRow = [];
-                for(let i = 0; i < row.length; i++) {
-                    if(row[i].value !== 0) {
-                        squashedRow.push(row[i]);
-                    }
-                }
-
-                let newRow = [];
-
-                for(let i = 0; i < squashedRow.length; i++) {
-                    if(i + 1 === squashedRow.length) {
-                        newRow.push({ value: squashedRow[i].value });
-                        break;
-                    }
-
-                    if(squashedRow[i].value === squashedRow[i + 1].value) {
-                        newRow.push({value : squashedRow[i].value + 1});
-                        i++;
-                        continue;
-                    }
-
-                    newRow.push({ value: squashedRow[i].value });
-                };
+                let squashedRow = squashRow(row);
+                let newRow = combineLeftRowVals(squashedRow);
 
                 let diff = row.length - newRow.length;
                 for(let i = 0; i < diff; i++) {
@@ -90,6 +70,20 @@ export const gameSlice = createSlice({
         },
         moveRight: (state) => {
             console.log("Right Key Trigger");
+
+            let newState = state.gameState.map(row => {
+                let squashedRow = squashRow(row);
+                let newRow = combineRightRowVals(squashedRow);
+
+                let diff = row.length - newRow.length;
+                for(let i = 0; i < diff; i++) {
+                    newRow.unshift({ value: 0 });
+                }
+
+                return newRow;
+            });
+
+            state.gameState = newState;
         },
         moveUp: (state) => {
             console.log("Up Key Trigger");
@@ -112,9 +106,6 @@ export const gameSlice = createSlice({
     }
 });
 
-const copyGameState = (arr: TileInfo[][]) : TileInfo[][] => {
-    return arr.map((i) => i.slice());
-}
 
 export const { newGame, moveLeft, moveRight, moveUp, moveDown, gameOver, startGame } = gameSlice.actions;
 
