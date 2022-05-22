@@ -51,7 +51,25 @@ export const gameSlice = createSlice({
             state.width = action.payload.width;
         },
         moveLeft: (state) => {
-            console.log("Left Key Trigger");   
+            console.log("Left Key Trigger");
+            let newState = state.gameState.map(row => {
+                let newRow = [];
+                for(let i = 0; i < row.length; i++) {
+                    if(row[i].value !== 0) {
+                        newRow.push(row[i]);
+                    }
+                }
+
+                let diff = row.length - newRow.length;
+                for(let i = 0; i < diff; i++) {
+                    newRow.push({ value: 0 });
+                }
+
+                return newRow;
+            });
+
+            state.gameState = newState;
+
         },
         moveRight: (state) => {
             console.log("Right Key Trigger");
@@ -66,7 +84,7 @@ export const gameSlice = createSlice({
             state.isOver = true;
         },
         startGame: (state) => {
-            let cleanState = initialState.gameState.map((i) => i.slice());
+            let cleanState = copyGameState(initialState.gameState);
 
             for(let i = 0; i < 2; i++) {
                 cleanState[Math.floor(Math.random() * 4)][Math.floor(Math.random() * 4)] = { value: Math.ceil(Math.random() * 2)}
@@ -76,6 +94,10 @@ export const gameSlice = createSlice({
         }
     }
 });
+
+const copyGameState = (arr: TileInfo[][]) : TileInfo[][] => {
+    return arr.map((i) => i.slice());
+}
 
 export const { newGame, moveLeft, moveRight, moveUp, moveDown, gameOver, startGame } = gameSlice.actions;
 
