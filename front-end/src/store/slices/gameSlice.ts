@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { combineLeftRowVals, combineRightRowVals, copyGameState, generateTile, hasTileMoved, rotateLeft, rotateRight, squashRow } from '../../services/gameLogicService';
+import { combineLeftRowVals, combineRightRowVals, copyGameState, generateTile, hasTileMoved, isGameOver, makeDownMove, makeLeftMove, makeRightMove, makeUpMove, rotateLeft, rotateRight, squashRow } from '../../services/gameLogicService';
 import { RootState } from '../rootStore';
 
 export interface TileInfo {
@@ -52,78 +52,37 @@ export const gameSlice = createSlice({
             state.width = action.payload.width;
         },
         moveLeft: (state) => {
-            let newState = state.gameState.map(row => {
-                let squashedRow = squashRow(row);
-                let newRow = combineLeftRowVals(squashedRow);
-
-                let diff = row.length - newRow.length;
-                for(let i = 0; i < diff; i++) {
-                    newRow.push({ value: 0 });
-                }
-
-                return newRow;
-            });
+            let newState = makeLeftMove(state.gameState);
 
             if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if(isGameOver(newState)) state.isOver = true;
+
 
             state.gameState = newState;
 
         },
         moveRight: (state) => {
-            let newState = state.gameState.map(row => {
-                let squashedRow = squashRow(row);
-                let newRow = combineRightRowVals(squashedRow);
-
-                let diff = row.length - newRow.length;
-                for(let i = 0; i < diff; i++) {
-                    newRow.unshift({ value: 0 });
-                }
-
-                return newRow;
-            });
+            let newState = makeRightMove(state.gameState);
 
             if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if(isGameOver(newState)) state.isOver = true;
 
             state.gameState = newState;
         },
         moveUp: (state) => {
-            let rotatedState = rotateLeft(state.gameState);
+            let newState = makeUpMove(state.gameState);
 
-            let newState = rotatedState.map(row => {
-                let squashedRow = squashRow(row);
-                let newRow = combineRightRowVals(squashedRow);
-
-                let diff = row.length - newRow.length;
-                for(let i = 0; i < diff; i++) {
-                    newRow.push({ value: 0 });
-                }
-
-                return newRow;
-            });
-
-            newState = rotateRight(newState);
             if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if(isGameOver(newState)) state.isOver = true;
 
             state.gameState = newState;
         },
         moveDown: (state) => {
-            let rotatedState = rotateRight(state.gameState);
+            let newState = makeDownMove(state.gameState);
 
-            let newState = rotatedState.map(row => {
-                let squashedRow = squashRow(row);
-                let newRow = combineLeftRowVals(squashedRow);
-
-                let diff = row.length - newRow.length;
-                for(let i = 0; i < diff; i++) {
-                    newRow.push({ value: 0 });
-                }
-
-                return newRow;
-            });
-
-            newState = rotateLeft(newState);
             if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
-
+            if(isGameOver(newState)) state.isOver = true;
+            
             state.gameState = newState;
             
         },

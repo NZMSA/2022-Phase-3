@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { moveDown, moveLeft, moveRight, moveUp, gameOver, newGame, selectState, startGame } from "../store/slices/gameSlice";
+import { moveDown, moveLeft, moveRight, moveUp, gameOver, newGame, selectState, startGame, selectIsOver } from "../store/slices/gameSlice";
 import GameGrid from "./GameGrid";
 
 
@@ -13,6 +13,7 @@ export interface LogicGameGridProps {
 //TODO: Add in custom key-bindings for controls - Rodger, 7th May 2022 (Alternative, bundle common keypress events)
 const LogicGameGrid = ({width, height} : LogicGameGridProps) : JSX.Element => {
     const gameState = useAppSelector(selectState);
+    const isGameOver = useAppSelector(selectIsOver);
     const dispatch = useAppDispatch();
     
     useKeyPress('ArrowDown', () => {
@@ -33,7 +34,11 @@ const LogicGameGrid = ({width, height} : LogicGameGridProps) : JSX.Element => {
     }, [dispatch]);
 
     return <Fragment> 
+            {isGameOver ? <div>
+                <h1>Game Over!</h1>
+            </div> : 
             <GameGrid width={width} height={height} gameState={gameState}/>
+        }
         </Fragment>
 }
 
