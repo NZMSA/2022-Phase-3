@@ -17,7 +17,6 @@ public class CreateMoveHandler : AsyncRequestHandler<CreateMoveCommand>
 {
     protected override Task Handle(CreateMoveCommand request, CancellationToken cancellationToken)
     {
-        // request.GameStep
         throw new NotImplementedException();
     }
 }
