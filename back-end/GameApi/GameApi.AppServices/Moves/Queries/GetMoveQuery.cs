@@ -1,4 +1,4 @@
-﻿using GameApi.Domain.Moves;
+﻿using GameApi.Domain.Game;
 using MediatR;
 
 namespace GameApi.AppServices.Moves.Queries;
