@@ -66,8 +66,6 @@ export const gameSlice = createSlice({
         },
         executeStateUpdate: (state) => {
             let newState = state.gameState;
-
-            console.log('Updating state')
             
             switch (state.moveInProgress) {
                 case MoveType.LEFT:
