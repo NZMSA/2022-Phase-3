@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { sleep } from 'react-query/types/core/utils';
 import { combineLeftRowVals, combineRightRowVals, copyGameState, generateTile, hasTileMoved, isGameOver, makeDownMove, makeLeftMove, makeRightMove, makeUpMove, rotateLeft, rotateRight, squashRow } from '../../services/gameLogicService';
 import { RootState } from '../rootStore';
 
@@ -11,10 +12,16 @@ export interface GameState {
     height: number,
     width: number,
     score: number,
-    isOver: boolean
+    isOver: boolean,
+    moveInProgress: MoveType,
+    playAnimation: boolean
 }
 
-const initialState : GameState = {
+export enum MoveType {
+    LEFT, RIGHT, UP, DOWN, NONE
+}
+
+const initialState: GameState = {
     gameState: [
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
         [{ value: 0 }, { value: 0 }, { value: 0 }, { value: 0 }],
@@ -24,7 +31,9 @@ const initialState : GameState = {
     height: 4,
     width: 4,
     score: 0,
-    isOver: false
+    isOver: false,
+    moveInProgress: MoveType.NONE,
+    playAnimation: false
 }
 
 //TODO: implement reducer actions - Rodger, 7th May 2022
@@ -32,13 +41,13 @@ export const gameSlice = createSlice({
     name: 'game',
     initialState,
     reducers: {
-        newGame: (state, action : PayloadAction<{height: number, width: number}>) => {
+        newGame: (state, action: PayloadAction<{ height: number, width: number }>) => {
             let newGameState = [];
 
-            for(let i = 0; i < action.payload.height; i++) {
+            for (let i = 0; i < action.payload.height; i++) {
                 let row = [];
 
-                for(let j = 0; j < action.payload.width; j++) {
+                for (let j = 0; j < action.payload.width; j++) {
                     row.push({ value: 0 });
                 }
 
@@ -51,11 +60,56 @@ export const gameSlice = createSlice({
             state.height = action.payload.height;
             state.width = action.payload.width;
         },
+        startMove: (state, action: PayloadAction<MoveType>) => {
+            state.moveInProgress = action.payload;
+            state.playAnimation = true;
+        },
+        executeStateUpdate: (state) => {
+            let newState = state.gameState;
+
+            console.log('Updating state')
+            
+            switch (state.moveInProgress) {
+                case MoveType.LEFT:
+                    newState = makeLeftMove(state.gameState);
+
+                    if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+                    if (isGameOver(newState)) state.isOver = true;
+        
+                    state.gameState = newState;
+                    break;
+                case MoveType.RIGHT:
+                    newState = makeRightMove(state.gameState);
+
+                    if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+                    if (isGameOver(newState)) state.isOver = true;
+        
+                    state.gameState = newState;
+                    break;
+                case MoveType.UP:
+                    newState = makeUpMove(state.gameState);
+
+                    if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+                    if (isGameOver(newState)) state.isOver = true;
+        
+                    state.gameState = newState;
+                    break;
+                case MoveType.DOWN:
+                    newState = makeDownMove(state.gameState);
+
+                    if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+                    if (isGameOver(newState)) state.isOver = true;
+        
+                    state.gameState = newState;
+                    break;
+            }
+            state.playAnimation = false;
+        },
         moveLeft: (state) => {
             let newState = makeLeftMove(state.gameState);
 
-            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
-            if(isGameOver(newState)) state.isOver = true;
+            if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if (isGameOver(newState)) state.isOver = true;
 
 
             state.gameState = newState;
@@ -64,27 +118,27 @@ export const gameSlice = createSlice({
         moveRight: (state) => {
             let newState = makeRightMove(state.gameState);
 
-            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
-            if(isGameOver(newState)) state.isOver = true;
+            if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if (isGameOver(newState)) state.isOver = true;
 
             state.gameState = newState;
         },
         moveUp: (state) => {
             let newState = makeUpMove(state.gameState);
 
-            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
-            if(isGameOver(newState)) state.isOver = true;
+            if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if (isGameOver(newState)) state.isOver = true;
 
             state.gameState = newState;
         },
         moveDown: (state) => {
             let newState = makeDownMove(state.gameState);
 
-            if(hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
-            if(isGameOver(newState)) state.isOver = true;
-            
+            if (hasTileMoved(state.gameState, newState)) newState = generateTile(newState);
+            if (isGameOver(newState)) state.isOver = true;
+
             state.gameState = newState;
-            
+
         },
         gameOver: (state) => {
             state.isOver = true;
@@ -97,13 +151,13 @@ export const gameSlice = createSlice({
             let y1 = Math.floor(Math.random() * 4);
             let y2 = Math.floor(Math.random() * 4);
 
-            if(x1 === x2 && y1 === y2) {
+            if (x1 === x2 && y1 === y2) {
                 y2 = Math.floor(Math.random() * y1);
                 x2 = Math.floor(Math.random() * x1);
             }
 
-            cleanState[x1][y1] = { value: Math.ceil(Math.random() * 2)};
-            cleanState[x2][y2] = { value: Math.ceil(Math.random() * 2)};
+            cleanState[x1][y1] = { value: Math.ceil(Math.random() * 2) };
+            cleanState[x2][y2] = { value: Math.ceil(Math.random() * 2) };
 
             state.gameState = cleanState;
         }
@@ -111,7 +165,8 @@ export const gameSlice = createSlice({
 });
 
 
-export const { newGame, moveLeft, moveRight, moveUp, moveDown, gameOver, startGame } = gameSlice.actions;
+
+export const { newGame, moveLeft, moveRight, moveUp, moveDown, gameOver, startGame, startMove, executeStateUpdate } = gameSlice.actions;
 
 export const selectState = (state: RootState) => state.game.gameState;
 export const selectIsOver = (state: RootState) => state.game.isOver;

@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { moveDown, moveLeft, moveRight, moveUp, gameOver, newGame, selectState, startGame, selectIsOver } from "../store/slices/gameSlice";
+import { moveDown, moveLeft, moveRight, moveUp, gameOver, newGame, selectState, startGame, selectIsOver, MoveType, startMove } from "../store/slices/gameSlice";
 import GameGrid from "./GameGrid";
 
 
@@ -17,16 +17,16 @@ const LogicGameGrid = ({width, height} : LogicGameGridProps) : JSX.Element => {
     const dispatch = useAppDispatch();
     
     useKeyPress('ArrowDown', () => {
-        dispatch(moveDown());
+        dispatch(startMove(MoveType.DOWN));
     });
     useKeyPress('ArrowUp', () => {
-        dispatch(moveUp())
+        dispatch(startMove(MoveType.UP))
     });
     useKeyPress('ArrowLeft', () => {
-        dispatch(moveLeft());
+        dispatch(startMove(MoveType.LEFT));
     });
     useKeyPress('ArrowRight', () => {
-        dispatch(moveRight());
+        dispatch(startMove(MoveType.RIGHT));
     });
 
     useEffect(() => {
