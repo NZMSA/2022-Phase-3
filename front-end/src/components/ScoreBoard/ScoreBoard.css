@@ -1,3 +1,26 @@
+.scoreboard {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  height: 80px;
+  margin-top: -10px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.current {
+  background-color: #bbada0;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.best {
+  background-color: #bbada0;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
 .show {
   animation: pop 0.5s linear forwards;
 }

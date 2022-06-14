@@ -48,25 +48,8 @@ export default function ScoreBoard() {
   }, [score]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "flex-end",
-        position: "relative",
-        height: "80px",
-        marginTop: "-10px",
-        mb: "25px",
-        textAlign: "center",
-      }}
-    >
-      <Box
-        sx={{
-          bgcolor: "#bbada0",
-          padding: "10px 20px",
-          borderRadius: "8px",
-          marginRight: "10px",
-        }}
-      >
+    <Box className="scoreboard">
+      <Box className="current">
         <Box
           key={Math.random()}
           className={score === prevScore.current ? "" : "show"}
@@ -82,7 +65,6 @@ export default function ScoreBoard() {
         >
           +{score - prevScore.current}
         </Box>
-
         <Typography sx={{ color: "#eee4cf", fontWeight: "700" }}>
           SCORE
         </Typography>
@@ -92,13 +74,7 @@ export default function ScoreBoard() {
           {score}
         </Typography>
       </Box>
-      <Box
-        sx={{
-          bgcolor: "#bbada0",
-          padding: "10px 20px",
-          borderRadius: "8px",
-        }}
-      >
+      <Box className="best">
         <Typography sx={{ color: "#eee4cf", fontWeight: "700" }}>
           BEST
         </Typography>
