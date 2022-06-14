@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./ScoreBoard.css";
-import { getScore } from "../../store/slices/gameSlice";
+import { useEffect, useRef } from "react";
 import { useAppSelector } from "../../store/hooks";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import "./ScoreBoard.css";
 // import axios from "axios";
 
-const getURL: string = "PUT URL HERE";
-const postURL: string = "PUT URL HERE";
+// const getURL: string = "PUT URL HERE";
+// const postURL: string = "PUT URL HERE";
 
 // // get score to backend TODO
 // let getScore = () => {
@@ -34,17 +35,79 @@ const postURL: string = "PUT URL HERE";
 // };
 
 export default function ScoreBoard() {
+  const prevScore = useRef(0);
+  const bestScore = useRef(0);
+
+  const { score } = useAppSelector((store) => store.game);
+
+  useEffect(() => {
+    if (score !== prevScore.current) {
+      prevScore.current = score;
+      bestScore.current = Math.max(bestScore.current, score);
+    }
+  }, [score]);
+
   return (
-    <div className="ScoreBoard">
-      <div className="Current">
-        <div>CURRENT</div>
-        <div className="scoreChange">+12</div>
-        <div className="Score">{useAppSelector(getScore)}</div>
-      </div>
-      <div className="Highest">
-        <div>BEST</div>
-        <div className="Score">{useAppSelector(getScore)}</div>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        position: "relative",
+        height: "80px",
+        marginTop: "-10px",
+        mb: "25px",
+        textAlign: "center",
+      }}
+    >
+      <Box
+        sx={{
+          bgcolor: "#bbada0",
+          padding: "10px 20px",
+          borderRadius: "8px",
+          marginRight: "10px",
+        }}
+      >
+        <Box
+          key={Math.random()}
+          className={score === prevScore.current ? "" : "show"}
+          sx={{
+            position: "absolute",
+            top: "calc(50% + 3px)",
+            right: "27%",
+            zIndex: "100",
+            fontSize: "20px",
+            fontWeight: "700",
+            opacity: "0",
+          }}
+        >
+          +{score - prevScore.current}
+        </Box>
+
+        <Typography sx={{ color: "#eee4cf", fontWeight: "700" }}>
+          SCORE
+        </Typography>
+        <Typography
+          sx={{ color: "white", fontWeight: "700", fontSize: "25px" }}
+        >
+          {score}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          bgcolor: "#bbada0",
+          padding: "10px 20px",
+          borderRadius: "8px",
+        }}
+      >
+        <Typography sx={{ color: "#eee4cf", fontWeight: "700" }}>
+          BEST
+        </Typography>
+        <Typography
+          sx={{ color: "white", fontWeight: "700", fontSize: "25px" }}
+        >
+          {Math.max(bestScore.current, score)}
+        </Typography>
+      </Box>
+    </Box>
   );
 }

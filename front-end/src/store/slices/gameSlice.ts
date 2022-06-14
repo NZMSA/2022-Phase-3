@@ -1,6 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import {
-  scoreChange,
   combineLeftRowVals,
   combineRightRowVals,
   copyGameState,
@@ -70,7 +69,7 @@ export const gameSlice = createSlice({
       state.width = action.payload.width;
     },
     moveLeft: (state) => {
-      let newState = makeLeftMove(current(state.gameState));
+      let { newState, scoreChange } = makeLeftMove(current(state.gameState));
       if (hasTileMoved(state.gameState, newState))
         newState = generateTile(newState);
       if (isGameOver(newState)) state.isOver = true;
@@ -79,7 +78,7 @@ export const gameSlice = createSlice({
       state.gameState = newState;
     },
     moveRight: (state) => {
-      let newState = makeRightMove(current(state.gameState));
+      let { newState, scoreChange } = makeRightMove(current(state.gameState));
 
       if (hasTileMoved(state.gameState, newState))
         newState = generateTile(newState);
@@ -89,7 +88,7 @@ export const gameSlice = createSlice({
       state.gameState = newState;
     },
     moveUp: (state) => {
-      let newState = makeUpMove(current(state.gameState));
+      let { newState, scoreChange } = makeUpMove(current(state.gameState));
 
       if (hasTileMoved(state.gameState, newState))
         newState = generateTile(newState);
@@ -99,7 +98,7 @@ export const gameSlice = createSlice({
       state.gameState = newState;
     },
     moveDown: (state) => {
-      let newState = makeDownMove(current(state.gameState));
+      let { newState, scoreChange } = makeDownMove(current(state.gameState));
 
       if (hasTileMoved(state.gameState, newState))
         newState = generateTile(newState);
@@ -144,6 +143,5 @@ export const {
 
 export const selectState = (state: RootState) => state.game.gameState;
 export const selectIsOver = (state: RootState) => state.game.isOver;
-export const getScore = (state: RootState) => state.game.score;
 
 export default gameSlice.reducer;
