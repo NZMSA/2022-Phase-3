@@ -10,11 +10,13 @@
         <PackageReference Include="AutoMapper" Version="11.0.1" />
         <PackageReference Include="MediatR" Version="10.0.1" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\GameApi.AppServices\GameApi.AppServices.csproj" />
+      <ProjectReference Include="..\GameApi.Infrastructure\GameApi.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
