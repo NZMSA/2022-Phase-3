@@ -6,6 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - nzmsa-2048-backend
 on:
   push:
     branches:
+      - main
       - feat/sql-database
   workflow_dispatch:
 
