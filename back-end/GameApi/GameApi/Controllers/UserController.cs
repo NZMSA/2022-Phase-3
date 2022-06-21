@@ -10,9 +10,9 @@ namespace GameApi.Controllers;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    private readonly Game2048Context _context;
+    private readonly SqlDbContext _context;
 
-    public UsersController(Game2048Context context)
+    public UsersController(SqlDbContext context)
     {
         _context = context;
     }

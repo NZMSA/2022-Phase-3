@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GameApi.Infrastructure.Persistence.Contexts;
 
-public class Game2048Context : DbContext
+public class SqlDbContext : DbContext
 {
-    public Game2048Context(DbContextOptions<Game2048Context> options)
+    public SqlDbContext(DbContextOptions<SqlDbContext> options)
         : base(options)
     {
     }

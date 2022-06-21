@@ -15,9 +15,9 @@ namespace GameApi.Controllers;
 [ApiController]
 public class GameInstancesController : ControllerBase
 {
-    private readonly Game2048Context _context;
+    private readonly SqlDbContext _context;
 
-    public GameInstancesController(Game2048Context context)
+    public GameInstancesController(SqlDbContext context)
     {
         _context = context;
     }

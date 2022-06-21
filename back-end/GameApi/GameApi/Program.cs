@@ -1,7 +1,7 @@
 using GameApi.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<Game2048Context>(options =>
+builder.Services.AddDbContext<SqlDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Game2048Context") ?? throw new InvalidOperationException("Connection string 'Game2048Context' not found.")));
 
 // Add services to the container.
