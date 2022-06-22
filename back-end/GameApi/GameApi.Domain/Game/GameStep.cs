@@ -18,9 +18,10 @@ public class GameStep
 
     public int NewTileColumn { get; set; }
 
-    public Tile NewTile { get; set; } = default!;
+    ///
+    /// <summary>
+    /// The exponent of the number of a tile. e.g. 2048 -> 11
+    public int NewTileExponent { get; set; } = default!;
 
     public MoveType LastMove { get; set; }
-
-    public GameInstance GameInstance { get; set; } = default!;
 }

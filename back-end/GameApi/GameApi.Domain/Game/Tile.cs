@@ -2,8 +2,14 @@ namespace GameApi.Domain.Game;
 
 public class Tile
 {
-    ///
-    /// <summary>
-    /// The exponent of the number of a tile. e.g. 2048 -> 11
+    public int Row { get; set; }
+    public int Column { get; set; }
     public int Exponent { get; set; }
+
+    public Tile(int row, int column, int exponent)
+    {
+        Row = row;
+        Column = column;
+        Exponent = exponent;
+    }
 }
