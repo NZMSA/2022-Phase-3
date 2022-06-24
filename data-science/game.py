@@ -11,7 +11,7 @@ class Game():
         """
         self.matrix = matrix
         if len(self.matrix) == 0:
-            self.new_game()
+            self.newGame()
         elif len(self.matrix) != 16:
             raise ValueError("Inappropriate array size supplied, must supply 16 values.")
 
@@ -20,9 +20,9 @@ class Game():
         return self.matrix.copy()
 
 
-    def new_game(self):
+    def newGame(self):
         """
-        Reset the game state to where only 2 times are generated for the player to start.
+        Reset the game state to where only 2 tiles are generated for the player to start.
         """
         self.matrix = []
         for _ in range(4):
@@ -30,10 +30,10 @@ class Game():
                 self.matrix.append(0)
 
         for _ in range(2):
-            self.gen_random_number_tile()
+            self.genRandomNumberTile()
 
 
-    def gen_random_number_tile(self):
+    def genRandomNumberTile(self):
         """
         Generate a 2 or 4 on an empty tile indicated by a 0.
         """
@@ -66,14 +66,15 @@ class Game():
           8 |  9 | 10 | 11   
         ----+----+----+----
          12 | 13 | 14 | 15  
+
         """
-        if option == 0: # Up
+        if option == 0 or option.lower() == "up":
             four_arrays = [[0,4,8,12], [1,5,9,13], [2,6,10,14], [3,7,11,15]]
-        elif option == 1: # Right
+        elif option == 1 or option.lower() == "right":
             four_arrays = [[3,2,1,0], [7,6,5,4], [11,10,9,8], [15,14,13,12]]
-        elif option == 2: # Down
+        elif option == 2 or option.lower() == "down":
             four_arrays = [[12,8,4,0], [13,9,5,1], [14,10,6,2], [15,11,7,3]]
-        elif option == 3: # Left
+        elif option == 3 or option.lower() == "left":
             four_arrays = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15]]
         else:
             raise ValueError("Option should be integers between 0 and 3 both inclusive.")
@@ -134,12 +135,12 @@ class Game():
                     should_gen = True
                 else:
                     i += 1
-            
+
             for i in range(len(sample_column)):
                 self.matrix[array_index[i]] = sample_column[i]
-        
+
         if should_gen:
-            self.gen_random_number_tile()
+            self.genRandomNumberTile()
 
 
     def isGameOver(self) -> bool:
@@ -156,5 +157,90 @@ class Game():
 
                 if current_item_value == 0 or current_item_value == next_item_value or next_item_value == 0:
                     return False
-        
+
         return True
+
+
+if __name__ == "__main__":
+    """
+    Interactive terminal 2048 game.
+    """
+    from os import name, system, makedirs, walk
+    from math import floor, ceil
+    import pandas as pd
+
+    import warnings
+    warnings.filterwarnings('ignore')
+
+    game = Game()
+    board = game.board()
+    columnsHistData = [str(i) for i in range(16)]+["up", "down", "left", "right", "gameOver"]
+    histData = pd.DataFrame(columns=columnsHistData)
+
+    try:
+        makedirs("./output/game_hist")
+    except FileExistsError:
+        pass
+
+    for _,_,files in walk("./output/game_hist"):
+        fileIndex = len(files)
+
+    while not game.isGameOver():
+        a = ""
+        if name == "nt":
+            system("CLS")
+        else:
+            system("clear")
+
+        gameHistLine = board.copy()
+        boardConv = [str(2 ** i) if i > 0 else " " for i in board]
+
+        for i in range(4):
+            item = []
+            for j in range(4):
+                index = 4*i + j
+                str_num = boardConv[index]
+                item.append(' '*(4 - ceil(len(str_num)/2)) + str_num + ' '*(4 - floor(len(str_num)/2)))
+
+            print('        |        |        |        ')
+            print('|'.join(item))
+            print('        |        |        |        ')
+
+            if i < 3:
+                print('--------+--------+--------+--------')
+
+        print()
+
+        a = input("Enter a (left), w (up), s (down), d (right), q (exit application) or r (restart): ")
+
+        if a == "a":
+            game.move("left")
+            gameHistLine += [0,0,1,0,0]
+        elif a == "w":
+            game.move("up")
+            gameHistLine += [1,0,0,0,0]
+        elif a == "s":
+            game.move("down")
+            gameHistLine += [0,1,0,0,0]
+        elif a == "d":
+            game.move("right")
+            gameHistLine += [0,0,0,1,0]
+        elif a == "r":
+            game.newGame()
+            continue
+        elif a == "q":
+            break
+        else:
+            continue
+
+        histData = histData.append(pd.DataFrame([gameHistLine], columns=columnsHistData))
+        histData.drop_duplicates(subset=[str(i) for i in range(16)], keep="last").to_csv(f"./output/game_hist/{fileIndex}.csv", index=None)
+
+        board = game.board()
+
+    # Game over state.
+    gameHistLine = board.copy()
+    gameHistLine += [0,0,0,0,1]
+
+    histData = histData.append(pd.DataFrame([gameHistLine], columns=columnsHistData))
+    histData.drop_duplicates(subset=[str(i) for i in range(16)], keep="last").to_csv(f"./output/game_hist/{fileIndex}.csv", index=None)
