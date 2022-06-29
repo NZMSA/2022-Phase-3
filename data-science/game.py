@@ -77,55 +77,55 @@ class Game():
         elif option == 3 or option.lower() == "left":
             four_arrays = [[0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15]]
         else:
-            raise ValueError("Option should be integers between 0 and 3 both inclusive.")
+            raise ValueError("Option should be integers between 0 and 3 both inclusive or a direction in string format.")
 
         should_gen = False
 
-        for array_index in four_arrays:
-            # Two or more tiles in said row/column.
-            sample_column = [self.matrix[i] for i in array_index]
+        for array_indexes in four_arrays:
 
-            non_empty_index = []
+            sample_column = [self.matrix[i] for i in array_indexes]
+            non_empty_indexes = []
+
             for i in range(len(sample_column)):
                 if sample_column[i] != 0:
-                    non_empty_index.append(i)
+                    non_empty_indexes.append(i)
 
-            if len(non_empty_index) == 0:
+            if len(non_empty_indexes) == 0:
                 continue
 
-            if len(non_empty_index) == 1:
+            if len(non_empty_indexes) == 1:
                 while sample_column[0] == 0:
                     sample_column.pop(0)
                     sample_column.append(0)
                     should_gen = True
 
                 for i in range(len(sample_column)):
-                    self.matrix[array_index[i]] = sample_column[i]
+                    self.matrix[array_indexes[i]] = sample_column[i]
                 continue
 
             i = 0
-            size_non_empty_original = len(non_empty_index)
+            size_non_empty_original = len(non_empty_indexes)
 
             # Fusing numbers phase.
             while i < size_non_empty_original - 1: 
-                current_selected_value = sample_column[non_empty_index[i]]
-                next_selected_value = sample_column[non_empty_index[i+1]]
+                current_selected_value = sample_column[non_empty_indexes[i]]
+                next_selected_value = sample_column[non_empty_indexes[i+1]]
 
                 if current_selected_value == next_selected_value:
-                    sample_column[non_empty_index[i]] += 1
-                    sample_column[non_empty_index[i+1]] = 0
+                    sample_column[non_empty_indexes[i]] += 1
+                    sample_column[non_empty_indexes[i+1]] = 0
                     i += 2
                     should_gen = True
                 else:
                     i += 1
 
-            non_empty_index = []
+            non_empty_indexes = []
             for i in range(len(sample_column)):
                 if sample_column[i] != 0:
-                    non_empty_index.append(i)
+                    non_empty_indexes.append(i)
 
             i = 0
-            size_non_empty_original = len(non_empty_index)
+            size_non_empty_original = len(non_empty_indexes)
 
             # Putting tiles to the edge.
             while i < size_non_empty_original: 
@@ -137,7 +137,7 @@ class Game():
                     i += 1
 
             for i in range(len(sample_column)):
-                self.matrix[array_index[i]] = sample_column[i]
+                self.matrix[array_indexes[i]] = sample_column[i]
 
         if should_gen:
             self.genRandomNumberTile()
