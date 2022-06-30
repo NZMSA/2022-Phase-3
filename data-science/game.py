@@ -225,11 +225,14 @@ if __name__ == "__main__":
         elif a == "d":
             game.move("right")
             gameHistLine += [0,0,0,1,0]
-        elif a == "r":
+        elif a == "r": # Reset game and put new history in new file.
             game.newGame()
+            histData = pd.DataFrame(columns=columnsHistData)
+            fileIndex += 1
+            board = game.board()
             continue
         elif a == "q":
-            break
+            exit(0)
         else:
             continue
 
