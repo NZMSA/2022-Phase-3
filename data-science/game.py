@@ -211,27 +211,27 @@ if __name__ == "__main__":
 
         print()
 
-        a = input("Enter a (left), w (up), s (down), d (right), q (exit application) or r (restart): ")
+        a = input("Enter 'a' (left), 'w' (up), 's' (down), 'd' (right), 'r' (restart) or 'q' (exit application) and then press [Enter]: ")
 
-        if a == "a":
+        if a.lower() == "a":
             game.move("left")
             gameHistLine += [0,0,1,0,0]
-        elif a == "w":
+        elif a.lower() == "w":
             game.move("up")
             gameHistLine += [1,0,0,0,0]
-        elif a == "s":
+        elif a.lower() == "s":
             game.move("down")
             gameHistLine += [0,1,0,0,0]
-        elif a == "d":
+        elif a.lower() == "d":
             game.move("right")
             gameHistLine += [0,0,0,1,0]
-        elif a == "r": # Reset game and put new history in new file.
+        elif a.lower() == "r": # Reset game and put new history in new file.
             game.newGame()
             histData = pd.DataFrame(columns=columnsHistData)
             fileIndex += 1
             board = game.board()
             continue
-        elif a == "q":
+        elif a.lower() == "q":
             exit(0)
         else:
             continue

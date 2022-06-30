@@ -49,7 +49,7 @@ while True:
     else:
         print("Game Over!")
 
-    inputItem = input("Enter A to go previous, D to go next, enter instance number or Q to quit: ")
+    inputItem = input("Enter 'a' to go to previous instance, 'd' to go to next instance, an instance number or 'q' to quit and then press [Enter]: ")
     if inputItem.lower() == "a" and index > 0:
         index -= 1
     elif inputItem.lower() == "d" and index < (gameData.shape[0] - 1):
