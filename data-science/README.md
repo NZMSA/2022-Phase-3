@@ -2,7 +2,7 @@
 
 Welcome to the data science section!
 
-This module contains a skeleton setup of a Keras supervised model training setup which is used to make a Neural Network (NN for short) to be used for move prediction for a game called 2048.
+This module contains a skeleton setup of a [Tensorflow](https://www.tensorflow.org/) platform that uses a [Keras](https://keras.io/) supervised model training setup which is used to make a Neural Network (NN for short) for move prediction in a game known as [2048](https://en.wikipedia.org/wiki/2048_(video_game)). 
 
 ## Contents:
 * `api.py` - Has the API setup for the user to run a mini backend server instance.
