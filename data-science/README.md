@@ -1,4 +1,4 @@
-# Phase 2 Data Science Section
+# Phase 3 Data Science Section
 
 Welcome to the data science section!
 
