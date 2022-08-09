@@ -18,6 +18,7 @@ To pass phase 3 for the front-end, you will need to have any __five__ of the fol
 * Clear usage of Websockets
 * At least one fluid animation
 * Redux state management
+* Demonstration of complex FE logic
 
 ## Expert Features
 
