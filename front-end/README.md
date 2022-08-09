@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+# Front-end Phase 3
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Phase 3! Congratulations for making it so far. For Phase 3, the requirement is to implement some more advanced features that are a bit more involved or difficult to get working.
 
-## Available Scripts
+## Front End Requirements
 
-In the project directory, you can run:
+To pass phase 3 for the front-end, you will need to have any __five__ of the following advanced features, or any __two__ of the extra for experts features.
 
-### `npm start`
+## Advanced Features List
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* UI Scalability with window size
+* Mobile first development (using media query breakpoints, etc)
+* Storybook w/ both actions and interactions (play)
+* Progressive Web App (PWA) functionality w/ clear use of the service worker
+* API connection to your own API that is cloud hosted
+* Comprehensive unit testing
+* OAuth2 with PKCE login w/ at least ONE third party provider
+* Clear usage of Websockets
+* At least one fluid animation
+* Redux state management
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Expert Features
 
-### `npm test`
+* A YAML CI/CD pipeline which builds and deploys a containerised application to either Azure or AWS, which is configured to use environment variables correctly.
+* Usage of SSR / SSG with at least __three__ of the advanced features
+* Usage of Terraform to structure and provision a cloud environment, which is incorporated into a CI/CD pipeline
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Example Repository
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The following front-end code is meant to be a reference, as to how you could implement some of these advanced features. This assignment is going to be tough, and we're sure you're going to have a lot of questions. Please ask them over on the discord server, where we will respond ASAP!
