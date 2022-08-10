@@ -1,6 +1,6 @@
-# Phase 2 Data Science Section
+# Phase 3 Data Science
 
-Welcome to the data science section!
+Welcome to the playground project, this project is optional for you to play around with!
 
 This module contains a skeleton setup of a [Tensorflow](https://www.tensorflow.org/) platform that uses a [Keras](https://keras.io/) supervised model training setup which is used to make a Neural Network (NN for short) for move prediction in a game known as [2048](https://en.wikipedia.org/wiki/2048_(video_game)). 
 
@@ -26,7 +26,7 @@ Recommended:
 * [Anaconda](https://www.anaconda.com/)
 * [Virtualenv](https://virtualenv.pypa.io/en/latest/installation.html)
 
-## For students:
+## For students to play around with:
 
 - [ ] Obtain a good dataset either by:
     - [ ] Improving the agent to make more strategic moves.
