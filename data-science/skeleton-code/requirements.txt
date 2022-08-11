@@ -1,0 +1,5 @@
+ipykernel==6.15.0
+azureml-core==1.44.0
+opencv-python==4.6.0.66
+pandas==1.4.2
+tensorflow==2.9.1
