@@ -33,9 +33,6 @@ Recommended:
     - [ ] Play a couple of instances yourself and generate game history.
 - [ ] Tune your Neural Network model(s) to make valid moves.
 - [ ] Your trained model(s) are to be exposed as an API for other services to use to predict next move.
-- [ ] Write a report in markdown in a notebook about your model, a template is provided.
-
-Note: We assume we can run your model(s) by just running the API instance after cloning your repository so make sure your final model(s) is saved in the repository.
 
 ## Setting Up:
 
