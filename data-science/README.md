@@ -26,8 +26,6 @@ You are to complete all of these:
     * Create your Model. A skeleton notebook with example Neural Network is provided. Feel free to change the shape of your model:
         * Adding/changing hidden layers with their node counts and [activation types](https://keras.io/api/layers/activations/).
         * Changing the [optimizer](https://keras.io/api/optimizers/), [loss](https://keras.io/api/losses/) and the [metric](https://keras.io/api/metrics/) for the output.
-        * Changing the test size of the `train_test_split`.
-        * Changing the `batch_size` and number of `epochs` when fitting the model.
         * Feel free to change the input and output if you know what you are doing.
     * Fit your training and validation (testing in this case) dataset to the model.
 
