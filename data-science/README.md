@@ -20,7 +20,7 @@ You are to complete all of these:
 
 3. Data Processing. Do at least the following:
     * Obtain your training and testing dataset. Use the data batches as how they are meant to be used.
-    * Ensure that there is no data imbalance between the images belonging to the label you selected. Simply, there should be 12000 data entries for training and 2000 for testing.
+    * Ensure that there is no data imbalance between the images belonging to the label you selected. Simply, there should be 10000 data entries for training and 2000 for testing.
 
 4. Data Modelling.
     * Create your Model. A skeleton notebook with example Neural Network is provided. Feel free to change the shape of your model:
