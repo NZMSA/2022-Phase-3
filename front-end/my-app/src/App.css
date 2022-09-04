@@ -34,3 +34,6 @@ h1 {
   flex-direction: column;
 }
 
+.form-container {
+  max-width: 300px;
+}

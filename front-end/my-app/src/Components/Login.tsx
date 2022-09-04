@@ -1,5 +1,7 @@
 import React, { useState } from "react"; 
-import { Button, Form, Segment} from "semantic-ui-react"
+import { Button, Form, Segment} from "semantic-ui-react";
+import { motion } from "framer-motion";
+
 function Login() {
     let userInfo = "";
 
@@ -26,31 +28,33 @@ function Login() {
     }
 
     return (
-      <Segment inverted>
-        <Form inverted>
-            <Form.Group widths='equal'>
-                <Form.Input
-                    fluid label='Username'
-                    name="username"
-                    type="text"
-                    className="form-username"
-                    placeholder="Username"
-                    onChange={handleChange}
-                    value={form.username}
-                />
-                <Form.Input
-                    fluid label='Password'
-                    name="password"
-                    type="password"
-                    className="form-password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    value={form.password}
-                />
-                </Form.Group>
-                <Button onClick={handleSubmit}>Login</Button>
-        </Form>
-      </Segment>
+        <div>
+            <Segment inverted className="form-container">
+                <Form inverted>
+                    <Form.Group widths='equal'>
+                        <Form.Input
+                            fluid label='Username'
+                            name="username"
+                            type="text"
+                            className="form-username"
+                            placeholder="Username"
+                            onChange={handleChange}
+                            value={form.username}
+                        />
+                        <Form.Input
+                            fluid label='Password'
+                            name="password"
+                            type="password"
+                            className="form-password"
+                            placeholder="Password"
+                            onChange={handleChange}
+                            value={form.password}
+                        />
+                        </Form.Group>
+                        <Button onClick={handleSubmit}>Login</Button>
+                </Form>
+            </Segment>
+        </div>
     )
   }
 
