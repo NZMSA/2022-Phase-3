@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { loginUser } from '../api/apiClient'
 
-function Login(props: any) {
+function Login() {
     let userInfo = "";
 
     const initialState = {
@@ -11,7 +11,6 @@ function Login(props: any) {
     }
 
     const [form, useForm] = useState(initialState);
-    // const [move, setMove]= useState(false)
 
     function handleChange (e: any) {
         const { name, value } = e.target
@@ -25,26 +24,16 @@ function Login(props: any) {
     function handleSubmit (e:any) {
         e.preventDefault()
         loginUser(form)
-        // if (loginUser === true) {
-        //     props.history.push('/Search')
-        // } else 
-        
-        console.log(props.history)
         userInfo = form.username
         console.log(userInfo)
     }
 
     return (
             <motion.div 
-                animate={{rotate: [0, 50, -20, 20, -10, 50, -30, 40, 0, 20, -25, 360], scale:2.5}} 
+                animate={{rotate: [0, 50, -20, 20, -10, 50, -30, 40, 0, 20, -25, 360], scale:1.5}} 
                 transition={{duration: 5}}
                 >
                     <div className="form-container">
-                        <div className="background">
-                            <div className="shape"></div>
-                            <div className="shape"></div>
-                        </div>
-
                         <form>
                                 <h4>Sign In</h4>
                                 <label className="form-label">Username</label>
