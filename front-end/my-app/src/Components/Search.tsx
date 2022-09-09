@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import DogCard from "./Cards"
 import BREED_LIST from "../const";
+import { useNavigate } from "react-router-dom";
 import { Button, Segment, Input } from "semantic-ui-react";
 
 function Search() {
@@ -10,7 +11,8 @@ function Search() {
   const [ dogName, setDogName ]= useState("");
   const [filteredList, setFilteredList] = useState<String[]>([]);
   const [ imageUrlList, setImageUrlList] = useState<String[]>([]);
-  
+  const navigate = useNavigate();
+
   function random(obj : any){
     return Math.floor(Math.random() * obj.length + 1)
   }
@@ -42,14 +44,14 @@ async function shuffle() {
     }
   }, [dogName]); 
 
+  function handleSubmit() {
+    navigate('/')
+  }
+
   return (
-
-    <div>
-
-      <h1>🐶 🐶 🐶 Dog Search 🐶 🐶 🐶</h1> 
-
       <div className="search-bar">
-        <Segment inverted>
+        <h1>🐶 🐶 🐶 Dog Search 🐶 🐶 🐶</h1> 
+        <Segment>
           <Input
             placeholder="Search Dog Breed"
             type="text"
@@ -58,12 +60,14 @@ async function shuffle() {
             onChange={(e) => setDogName(e.target.value)}
           />
         </Segment>
-          <Button.Group size='large'>
+          <Button.Group size='medium' className="search-button">
             <Button onClick={search}>Search</Button>
             <Button.Or />
             <Button onClick={shuffle}>Shuffle</Button>
+            <Button.Or />
+            <Button onClick={handleSubmit}>Home</Button>
           </Button.Group>
-      </div>
+      
       
       <div className="filtered-list">
         {
@@ -76,19 +80,21 @@ async function shuffle() {
       <br/>
       <br/>
 
-      <div className="image">
+      <div className="image" key="image">
         {
           imageUrlList.map( (ele, i) => {
             return (
               <div>
                 <h2>{"Breed: " + filteredList[i].toUpperCase()}</h2>
-                <DogCard imageLink={ele}/> 
+                <DogCard key="" href="" imageLink={ele}/> 
               </div>)
           })
         }
       </div>
-
-    </div>
+      <footer>
+        MSA Phase 3 | Front-end | tsoukent97@outlook.com | <a href="https://github.com/tsoukent97" target="blank">Github</a> 
+      </footer>
+     </div>
   );
 }
 

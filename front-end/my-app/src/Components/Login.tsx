@@ -1,31 +1,19 @@
-import React, { useState } from 'react'; 
 import { motion } from 'framer-motion';
-import { loginUser } from '../api/apiClient'
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
-    let userInfo = "";
+    const navigate = useNavigate();
 
-    const initialState = {
-        username: "",
-        password: ""
-    }
-
-    const [form, useForm] = useState(initialState);
-
-    function handleChange (e: any) {
-        const { name, value } = e.target
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useForm({
-          ...form,
-          [name]: value
-        })
-    }
-
-    function handleSubmit (e:any) {
+    function dogSubmit (e:any) {
         e.preventDefault()
-        loginUser(form)
-        userInfo = form.username
-        console.log(userInfo)
+        navigate('/Search')
+
+    }
+
+    function chatSubmit (e:any) {
+        e.preventDefault()
+        navigate('/Chat')
     }
 
     return (
@@ -35,70 +23,30 @@ function Login() {
                 >
                     <div className="form-container">
                         <form>
-                                <h4>Sign In</h4>
-                                <label className="form-label">Username</label>
-                                <input
-                                    name="username"
-                                    type="text"
-                                    className="form-input"
-                                    placeholder='Email or Phone'
-                                    onChange={handleChange}
-                                    value={form.username}
-                                />
-                                <label className="form-label">Password</label>
-                                <input
-                                    name="password"
-                                    type="password"
-                                    className="form-input"
-                                    placeholder='Password'
-                                    onChange={handleChange}
-                                    value={form.password}
-                                />
+                                <h4>Welcome</h4>
+                                
                                 <button 
                                     type="submit" 
                                     className="form-button"
-                                    onClick={handleSubmit}
+                                    onClick={dogSubmit}
                                 >
-                                    Login
+                                    Dog Search
+                                </button>
+                                <button 
+                                    type="submit"
+                                    className="form-button"
+                                    onClick={chatSubmit}
+                                >
+                                    Web Chat
                                 </button>
                         </form>
+
+                        <footer>
+                            MSA Phase 3 | Front-end | tsoukent97@outlook.com | <a href="https://github.com/tsoukent97" target="blank">Github</a> 
+                        </footer>
                     </div>
             </motion.div>
     )
   }
 
 export default Login;
-
-// const icon = {
-//     hidden: {
-//       opacity: 0,
-//       pathLength: 0,
-//       fill: "rgba(255, 255, 255, 0)"
-//     },
-//     visible: {
-//       opacity: 1,
-//       pathLength: 1,
-//       fill: "rgba(255, 255, 255, 1)"
-//     }
-//   };
-  
-//   export const Example = () => (
-//     <div className="container">
-//       <motion.svg
-//         xmlns="http://www.w3.org/2000/svg"
-//         viewBox="0 0 100 100"
-//         className="item"
-//       >
-//         <motion.path
-//           d="M0 100V0l50 50 50-50v100L75 75l-25 25-25-25z"
-//           variants={icon}
-//           initial="hidden"
-//           animate="visible"
-//           transition={{
-//             default: { duration: 2, ease: "easeInOut" },
-//             fill: { duration: 2, ease: [1, 0, 0.8, 1] }
-//           }}
-//         />
-//       </motion.svg>
-//     </div>
-//   );
