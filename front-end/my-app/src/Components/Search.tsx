@@ -50,7 +50,8 @@ async function shuffle() {
 
   return (
       <div className="search-bar">
-        <h1>🐶 🐶 🐶 Dog Search 🐶 🐶 🐶</h1> 
+        <h1>🐶Dog Search🐶</h1>
+        <h2>Type A~Z in search bar to find your cute dog</h2>
         <Segment>
           <Input
             placeholder="Search Dog Breed"

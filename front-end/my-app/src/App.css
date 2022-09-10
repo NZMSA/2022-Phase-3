@@ -26,6 +26,10 @@ h1 {
   object-fit: contain;
 }
 
+.image-container {
+  max-width: 300px;
+  max-height: 250px;
+}
 
 .filtered-list {
   font-size: 20px
@@ -36,9 +40,9 @@ h1 {
   flex-direction: column;
   border: 2px solid aqua;
   max-width: auto;
-  max-height: 800px;
+  height: 100vh;
   border-radius: 5px;
-  background-color:#00BFFF;
+  background-color: #00BFFF;
   display: block;
   margin-left: auto;
   margin-right: auto

@@ -11,11 +11,6 @@ function Login() {
 
     }
 
-    function chatSubmit (e:any) {
-        e.preventDefault()
-        navigate('/Chat')
-    }
-
     return (
             <motion.div 
                 animate={{rotate: [0, 50, -20, 20, -10, 50, -30, 40, 0, 20, -25, 360], scale:1.5}} 
@@ -31,13 +26,6 @@ function Login() {
                                     onClick={dogSubmit}
                                 >
                                     Dog Search
-                                </button>
-                                <button 
-                                    type="submit"
-                                    className="form-button"
-                                    onClick={chatSubmit}
-                                >
-                                    Web Chat
                                 </button>
                         </form>
 
